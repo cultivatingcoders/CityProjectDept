@@ -1,0 +1,54 @@
+img {
+  width: 100%;
+  float: center;
+    border-radius: 8px;
+}
+body {
+  font-family: 'Open Sans Condensed', sans-serif;
+  margin-left: 1.66%;
+  font-size: 24px;
+  font-weight: 700;
+  border-bottom: 30px solid #f1f1f1
+  padding-bottom: 20px;
+}
+.boxa {
+  background-color: lightgrey;
+  width: 100%;
+  border: 10px solid brown;
+  padding: 5px;
+  margin: 25px;
+  top: 80px;
+}
+.boxb {
+  background-color: lightgrey;
+  width: 100%;
+  border: 10px solid brown;
+  padding: 5px;
+  margin: 25px;
+  top: 80px;
+}
+.jumbotron {
+padding: 0.5em 0.6em;
+background-size: contain;
+}
+h1 {
+    font-size: 36px;
+    font-style: italic;
+    text-align: center;
+    font-weight: 900
+}
+h2 {
+    font-size: 12px;
+    font-style: italic;
+    text-align: center;
+}
+h3 {
+    font-size: 10px;
+    font-style: italic;
+    text-align: center;
+}
+p {
+    font-size: 10px;
+    font-style: italic;
+    text-align: center;
+}
