@@ -8,6 +8,11 @@ const exphbs = require('express-handlebars');
 const http = require('http');
 // Adds sequelize, so we can interact with the database
 const sequelize = require('sequelize');
+// Add colors package.  This will allow us to display useful info when setting
+// up server.
+const colors = require('colors');
+// Package for parsing xml.
+const xml2js = require('xml2js');
 
 //turn on express tools
 const app = express();
@@ -19,7 +24,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 // Connect to database
-const db = new sequelize('citydata', 'root', 'password');
+const db = new sequelize('citydata', 'root', 'bj#4k3@t');
 
 // Define models
 // Create a department model
@@ -81,6 +86,68 @@ db.sync().then(function() {
     if (depts.length === 0) {
       // Grab the data
       console.log("No city data present.  Downloading...")
+
+      // Need to specify options for our http request.  Low-level node stuff
+      const options = {
+        hostname: "data.cabq.gov",
+        port: 80,
+        path: "/government/budget/BudgetCYApprovedCABQ-en-us.xml",
+        method: "GET"
+      }
+
+      const req = http.request(options, function(res) {
+
+        console.log("Got back a " + res.statusCode + " status code".bold);
+        var body = "";
+
+        if (res.statusCode >= 200 && res.statusCode < 400) {
+
+          res.setEncoding('utf8');
+          res.on('data', function(chunk) {
+
+            body = body + chunk;
+
+          });
+
+          res.on('end', function() {
+
+            console.log("Download Success!".green);
+            console.log("Converting data to javascript object...");
+
+            // Create parser
+            const parser = new xml2js.Parser();
+            // Parse data
+            parser.parseString(body, function(err, result) {
+
+              if (!err) {
+                // We only care about the actual rows of data, getting those is
+                // honestly a bit of a pain
+                const rows = result.dataset.data[0].row[0];
+                console.log("Parsing Successful".green);
+
+                // Next step is to fitler said data.  Why?  Because we really
+                // want to store departments, divisions, and funds as their
+                // own tables (makes searching way easier).  Unfortunately,
+                // this requires a bit of a process.
+                var depts = [];
+                var divisions = [];
+                var funds = [];
+              }
+
+            });
+
+          })
+
+        } else {
+
+          console.log("Download Fail!".red);
+
+        }
+
+      });
+
+      req.end();
+
     }
   });
 
