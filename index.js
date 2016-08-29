@@ -24,7 +24,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 // Connect to database
-const db = new sequelize('citydata', 'root', 'bj#4k3@t');
+const db = new sequelize('citydata', 'root', 'password');
 
 // Define models
 // Create a department model
@@ -122,7 +122,7 @@ db.sync().then(function() {
               if (!err) {
                 // We only care about the actual rows of data, getting those is
                 // honestly a bit of a pain
-                const rows = result.dataset.data[0].row[0];
+                const rows = result.dataset.data[0].row;
                 console.log("Parsing Successful".green);
 
                 // Next step is to fitler said data.  Why?  Because we really
@@ -132,6 +132,16 @@ db.sync().then(function() {
                 var depts = [];
                 var divisions = [];
                 var funds = [];
+                var found = false;
+                var newItem;
+
+                for(var i = 0; i < rows.length; i ++) {
+
+                  // Check the department info.  If we haven't an identical
+                  // department yet, then add it.
+                  filterDept(rows[i].value[3], rows[i].value[4], depts);
+                }
+                console.log(depts);
               }
 
             });
@@ -165,3 +175,32 @@ const port = 3000;
 app.listen(port, function () {
   console.log("Example app listening on port " + port + "!");
 });
+
+// Filters through the array for dept info
+const filterDept = function(deptID, deptName, deptArray) {
+
+  var found = false;
+  var newDept;
+
+  for(var j = 0; j < deptArray.length; j ++) {
+    if(deptArray[j].deptID === deptID) {
+      found = true;
+      break;
+    }
+  }
+
+  if (found === false) {
+    newDept = {
+      deptID: deptID,
+      name: deptName
+    };
+    deptArray.push(newDept);
+  }
+
+  found = false;
+}
+
+// Filters through the array for division info.
+const filterDivision = function(deptID, divID, divName, divArray) {
+
+}
