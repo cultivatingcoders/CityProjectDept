@@ -140,8 +140,13 @@ db.sync().then(function() {
                   // Check the department info.  If we haven't an identical
                   // department yet, then add it.
                   filterDept(rows[i].value[3], rows[i].value[4], depts);
+
+                  filterDivision(rows[i].value[3], rows[i].value[5],
+                    rows[i].value[6], divisions);
+
+                  filterFund(rows[i].value[7], rows[i].value[8], funds);
                 }
-                console.log(depts);
+                console.log(funds);
               }
 
             });
@@ -203,4 +208,48 @@ const filterDept = function(deptID, deptName, deptArray) {
 // Filters through the array for division info.
 const filterDivision = function(deptID, divID, divName, divArray) {
 
+  var found = false;
+  var newDiv;
+
+  for(var i = 0; i < divArray.length; i ++) {
+    if(divArray[i].divID === divID) {
+      found = true;
+      break;
+    }
+  }
+
+  if (found === false) {
+    newDiv = {
+      deptID: deptID,
+      divID: divID,
+      name: divName
+    }
+    divArray.push(newDiv);
+  }
+
+  found = false;
+
+}
+
+const filterFund = function(fundID, fundName, fundArray) {
+
+  var found = false;
+  var newFund;
+
+  for(var i = 0; i < fundArray.length; i ++) {
+    if(fundArray[i].fundID === fundID) {
+      found = true;
+      break;
+    }
+  }
+
+  if (found === false) {
+    newFund = {
+      fundID: fundID,
+      name: fundName
+    };
+    fundArray.push(newFund);
+  }
+
+  found = false;
 }
