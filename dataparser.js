@@ -39,6 +39,7 @@ module.exports.filterData = function(data, db) {
     var depts = [];
     var divisions = [];
     var funds = [];
+    var accounts = [];
 
     for(var i = 0; i < rows.length; i ++) {
 
@@ -51,6 +52,8 @@ module.exports.filterData = function(data, db) {
 
       filterFund(rows[i].value[FUNDID], rows[i].value[FUNDNAME], funds);
 
+      filterAccount(rows[i].value[ACCTID], rows[i].value[ACCTNAME], accounts);
+
       rows[i] = cleanAccount(rows[i]);
     }
 
@@ -60,13 +63,14 @@ module.exports.filterData = function(data, db) {
     models.Department.bulkCreate(depts).then(function() {
       models.Division.bulkCreate(divisions).then(function() {
         models.Fund.bulkCreate(funds).then(function() {
-          models.Account.bulkCreate(rows).then(function() {
-            console.log("Data stored".green);
+          models.Account.bulkCreate(accounts).then(function() {
+            models.BudgetItem.bulkCreate(rows).then(function() {
+              console.log("Data stored".green);
+            });
           });
-        })
-      })
-    })
-
+        });
+      });
+    });
   });
 }
 
@@ -143,17 +147,40 @@ const filterFund = function(fundID, fundName, fundArray) {
   found = false;
 }
 
+const filterAccount = function(acctID, acctName, acctArray) {
+
+  var found = false;
+  var newAcct;
+
+  for(var i = 0; i < acctArray.length; i ++) {
+    if(acctArray[i].accountID == acctID) {
+      found = true;
+      break;
+    }
+  }
+
+  if (found === false) {
+    newAcct = {
+      accountID: acctID,
+      name: acctName
+    }
+    acctArray.push(newAcct);
+  }
+
+  found = false;
+}
+
 // Cleans up the data associated with accounts by returning back an object with
 // the necessary type conversions
 const cleanAccount = function(account) {
 
   return {
-    accountID: account.value[ACCTID],
     year: parseInt(account.value[YEAR]),
     budgetType: account.value[TYPE],
     sortOrder: parseInt(account.value[SORT]),
     name: account.value[ACCTNAME],
     total: parseInt(account.value[TOTAL]),
+    accountID: account.value[ACCTID],
     divisionID: account.value[DIVID],
     fundID: account.value[FUNDID]
   }

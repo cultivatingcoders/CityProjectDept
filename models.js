@@ -45,16 +45,27 @@ module.exports.define = function(db) {
       unique: true,
       allowNull: false
     },
+    name: sequelize.STRING
+  });
+
+  module.exports.BudgetItem = db.define('budgetitem', {
     year: sequelize.INTEGER,
     budgetType: sequelize.STRING,
     sortOrder: sequelize.INTEGER,
     name: sequelize.STRING,
     total: sequelize.INTEGER,
+    accountID: {
+      type: sequelize.STRING,
+      references: {
+        model: module.exports.Account,
+        key: 'accountID'
+      }
+    },
     divisionID: {
       type: sequelize.STRING,
       references: {
         model: module.exports.Division,
-        key: 'deptID'
+        key: 'divisionID'
       }
     },
     fundID: {
