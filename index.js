@@ -23,7 +23,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 // Connect to database
-const db = new sequelize('citydata', 'root', 'password');
+const db = new sequelize('citydata', 'root', 'Bullshit1');
 
 // Define models
 // TODO: Add define here
