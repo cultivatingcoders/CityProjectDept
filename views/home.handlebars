@@ -3,77 +3,116 @@
     <img src="/images/Albuquerque_skyline.jpg"
   </div>
 
+
 </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="boxa">
+      <!-- <div class="row">
+        <div class="col-sm-12">
+          <div class="boxa"> -->
             <h1 align: center>Albuquerque Budgets</h1> <h1 font-weight:700>Department revenue charts.</h1>
-<p> Choose a department on the round circle on the right.  The budget data will be displayed.</p>
-<script>
-document write(fiscal_year);
-document write(approved);
-document write(budget_sort_order);
-document write(deptid);
-document write(department);
-document write(division_id);
-document write(fund);
-document write(fund_description);
-document write(acount_description);
-document write(total)
-</script>
-            <br><br><br><br><br><br><br>
+<!-- <p> Choose a department on the round circle on the right.  The budget data will be displayed.</p> -->
+            <!-- <br><br><br><br><br><br><br> -->
             <h3>This website is privatly created based on publicly available data provided by the city of Albuquerque.</h3>
           </div>
         </div>
-          <div class="col-sm-6">
-            <div class="boxb">
-                      <a href="dept">Go to dept page
-              <img src="./images/pie01.png">
+
+          <!-- <div class="col-sm-9">
+            <div class="boxb"> -->
+                      <!-- <a href="dept">Go to dept page -->
+              <!-- <img src="./images/pie01.png"> -->
+
+                  <!-- <h1>This is text</h1> -->
+               <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                  <script type="text/javascript">
+                    google.charts.load("current", {packages:["corechart"]});
+                    google.charts.setOnLoadCallback(drawChart);
+              var department1 = "Fire Department";
+                var deptValue1 = 20
+              var department2 = "Police Department";
+              var deptValue2 = 30
+              var department3 = "Dept of Redundacy Department";
+              var deptValue3 = 40
+
+                    function drawChart() {
+                      var data = google.visualization.arrayToDataTable([
+                        ['Task', 'Hours per Day'],
+                        [department1,     deptValue1],
+                        [department2,     deptValue2],
+                        [department3,     deptValue3],
+                        ['Watch TV', 2],
+                        ['Sleep',    7],
+                        ['Work',     11],
+                        ['Eat',      2],
+                        ['Commute',  2],
+                        ['Watch TV', 2],
+                        ['Sleep',    7],
+                        ['Work',     11],
+                        ['Eat',      2],
+                        ['Commute',  2],
+                        ['Watch TV', 2],
+                        ['Sleep',    7]
+                      ]);
+
+                      var options = {
+                        title: 'Department Budgets',
+                        is3D: true,
+                      };
+
+                      var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                      chart.draw(data, options);
+                    }
+                  </script>
+                </head>
+                <body>
+                  <!-- <div id="piechart_3d" style="width: 900px; height: 500px;"></div> -->
+  <div id="piechart_3d" style="width: 75%; height: 500px;"></div>
+<div>
+  <
+  <h1>Contents: City Departments</h1>
+<a href = "#AnimalWelfare">Animal Welfair</a>
+<a href = "#Aviation Department">Aviation Department</a>
+<a href = "#CityClerksOffice">City Clerk's Office</a>
+<a href = "#CityCouncil">City Council</a>
+<a href = "#CivilianPoliceOversightAgency">Civilian Police Oversight Agency</a>
+<a href = "#CulturalServicesDepartment">Cultural Services Department</a>
+<a href = "#EconomicDevelopment">Economic Development</a>
+<a href = "#EmergencyManagementOffice">Emergency Management Office</a>
+<a href = "#EnvironmentalHealthDepartment">Environmental Health Department</a>
+<a href = "#FamilyCommunityServicesDepartment">Family & Community Services Department</a>
+<a href = "#FinanceAdministrativeServicesDepartment">Finance & Administrative Services Department</a>
+<a href = "#FinanceAdministrativeServicesDepartment">Finance & Administrative Services Department</a>
+<a href = "#FireDepartment">Fire Department</a>
+<a href = "#HumanResourcesDepartment">Human Resources Department</a>
+<a href = "#InternalAuditOffice">Internal Audit Office</a>
+<a href = "#LegalDepartment">Legal Department</a>
+<a href = "#ManagementBudgetOffice">Management & Budget Office</a>
+<a href = "#Mayor's Office">Mayor's Office</a>
+<a href = "#MunicipalDevelopmentDepartment">Municipal Development Department</a>
+<a href = "#ParksRecreationDepartment">Parks & Recreation Department</a>
+<a href = "#PlanningDepartment">Planning Department</a>
+<a href = "#PoliceDepartment">Police Department</a>
+<a href = "#SeniorAffairsDepartment">Senior Affairs Department</a>
+<a href = "#SolidWasteDepartment">Solid Waste Department</a>
+<a href = "#TransitDepartment">Transit Department</a>
+<a href = "#TechnologyInnovationDepartment">Technology & Innovation Department</a>
+<a href = "#SeniorAffairsDepartment">Senior Affairs Department</a>
+
         </div>
 
+<hr>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<h1 id="AnimalWelfare">
+This is animal welfare.  Here we pick up dogs and cats and kill them.
+</h1>
+<hr>
 
-      </div>
+<hi> here we are at animal welfair</h1>
+
+      <!-- </div> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-    </div>
-  </div>
+    <!-- </div>
+  </div> -->
 </div>
 </div>
-
-// <item name="FISCAL_YEAR" type="xs:string" length="10"/>
-// <item name="BUDGET_TYPE" type="xs:string" length="18"/>
-// <item name="BUDGET_SORT_ORDER" type="xs:double" precision="2"/>
-// <item name="DEPTID" type="xs:string" length="42"/>
-// <item name="DEPARTMENT" type="xs:string" length="62"/>
-// <item name="DIVISION_ID" type="xs:string" length="16"/>
-// <item name="DIVISION" type="xs:string" length="202"/>
-// <item name="FUND" type="xs:string" length="8"/>
-// <item name="FUND_DESCRIPTION" type="xs:string" length="202"/>
-// <item name="ACCOUNT" type="xs:string" length="202"/>
-// <item name="ACCOUNT_DESCRIPTION" type="xs:string" length="202"/>
-// <item name="TOTAL" type="xs:double" precision="2"/>
-
-//added varible data not tested
-var fiscal_year = "12016";
-var budgetype = "approved";
-var budget_sort_order = "0";
-var deptid = "id22";
-var department = "Fire Department";
-var division_id = "02";
-var fund = 20000;
-var fund_description = "Public Relations";
-var acount_description = "88888";
-var total = 200;
-console.log(fiscal_year,budgetype,budget_sort_order,deptid,department,division_id,fund,fund_description,total);
-<script>
-document write(fiscal_year);
-document write(approved);
-document write(budget_sort_order);
-document write(deptid);
-document write(department);
-document write(division_id);
-document write(fund);
-document write(fund_description);
-document write(acount_description);
-document write(total)
-</script>
+</body>
+</html>
