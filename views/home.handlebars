@@ -33,32 +33,26 @@
               var deptValue3 = 40
 
                     function drawChart() {
-                      var data = google.visualization.arrayToDataTable([
-                        ['Task', 'Hours per Day'],
-                        [department1,     deptValue1],
-                        [department2,     deptValue2],
-                        [department3,     deptValue3],
-                        ['Watch TV', 2],
-                        ['Sleep',    7],
-                        ['Work',     11],
-                        ['Eat',      2],
-                        ['Commute',  2],
-                        ['Watch TV', 2],
-                        ['Sleep',    7],
-                        ['Work',     11],
-                        ['Eat',      2],
-                        ['Commute',  2],
-                        ['Watch TV', 2],
-                        ['Sleep',    7]
-                      ]);
+                      // Grab department data
+                      $.get("/deptdata", function(data) {
+                        // Google uses a pretty weird way of dealing with data. So, let's
+                        // modify it a little bit
+                        var arrayData = [['Department', 'Total']];
+                        for(var i = 0; i < data.length; i ++) {
+                          arrayData.push([data[i].name, data[i].total]);
+                        }
+                        console.log(arrayData);
 
-                      var options = {
-                        title: 'Department Budgets',
-                        is3D: true,
-                      };
+                        var chartData = google.visualization.arrayToDataTable(arrayData);
 
-                      var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-                      chart.draw(data, options);
+                        var options = {
+                          title: 'City Budget By Department',
+                          is3D: true,
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                        chart.draw(chartData, options);
+                      });
                     }
                   </script>
                 </head>

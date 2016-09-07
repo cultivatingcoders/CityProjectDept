@@ -92,7 +92,7 @@ app.get('/', function (req, res) {
 
 app.get('/dept', function(req, res) {
   res.render('dept');
-})
+});
 
 app.get('/deptdata', function (req, res) {
 
