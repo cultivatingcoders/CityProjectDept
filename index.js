@@ -23,7 +23,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 // Connect to database
-const db = new sequelize('citydata', 'root', 'Bullshit1');
+const db = new sequelize('citydata', 'root', 'password');
 
 // Define models
 // TODO: Add define here
@@ -89,15 +89,40 @@ db.sync().then(function() {
 app.get('/', function (req, res) {
   res.render('home');
 });
-  app.get('/dept', function (req, res) {
-    res.render('dept');
+
+app.get('/dept', function(req, res) {
+  res.render('dept');
+})
+
+app.get('/deptdata', function (req, res) {
+
+  // Grab all the departments and all the accounts
+  models.Department.findAll({
+    attributes: ['deptID', 'name', 'total']
+  }).then(function(depts) {
+    models.BudgetItem.findAll().then(function(items) {
+
+      // For every department, attach a new attribute called total, then
+      // calculate the total amount of money allocated to it.
+      for(var i = 0; i < depts.length; i ++) {
+        depts[i].total = 0;
+        for(var j = 0; j < items.length; j ++) {
+          if (items[j].divisionID.substring(0, 2) == depts[i].deptID.substring(0, 2)) {
+            depts[i].total += items[j].total;
+          }
+        }
+      }
+      res.json(depts);
+    });
   });
+});
   app.get('/about', function (req, res) {
     res.render('about');
   });
   app.get('/contact', function (req, res) {
     res.render('contact');
   });
+
 ////
 //start the server
 const port = 3000;

@@ -11,7 +11,8 @@ module.exports.define = function(db) {
       unique: true,
       allowNull: false
     },
-    name: sequelize.STRING
+    name: sequelize.STRING,
+    total: sequelize.INTEGER
   });
 
   module.exports.Division = db.define('division', {
