@@ -92,6 +92,12 @@ app.get('/', function (req, res) {
   app.get('/dept', function (req, res) {
     res.render('dept');
   });
+  app.get('/about', function (req, res) {
+    res.render('about');
+  });
+  app.get('/contact', function (req, res) {
+    res.render('contact');
+  });
 ////
 //start the server
 const port = 3000;
