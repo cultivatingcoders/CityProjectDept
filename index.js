@@ -90,23 +90,29 @@ app.get('/', function (req, res) {
   res.render('home');
 });
 
-app.get('/dept', function (req, res) {
+app.get('/dept', function(req, res) {
+  res.render('dept');
+})
+
+app.get('/deptdata', function (req, res) {
 
   // Grab all the departments and all the accounts
-  models.Department.findAll().then(function(depts) {
+  models.Department.findAll({
+    attributes: ['deptID', 'name', 'total']
+  }).then(function(depts) {
     models.BudgetItem.findAll().then(function(items) {
 
       // For every department, attach a new attribute called total, then
       // calculate the total amount of money allocated to it.
-      for(var i = 0; i < depts; i ++) {
+      for(var i = 0; i < depts.length; i ++) {
         depts[i].total = 0;
-        for(var j = 0; j < items; j ++) {
-          if (items[j].divisionID.substring(0, 3) == depts[i].deptID.substring(0, 3)) {
-            depts[i].total += items.total;
+        for(var j = 0; j < items.length; j ++) {
+          if (items[j].divisionID.substring(0, 2) == depts[i].deptID.substring(0, 2)) {
+            depts[i].total += items[j].total;
           }
         }
       }
-      res.render('dept', {depts: depts});
+      res.json(depts);
     });
   });
 });
