@@ -32,8 +32,9 @@
                 <body>
                   <!-- <div id="piechart_3d" style="width: 900px; height: 500px;"></div> -->
   <div id="piechart_3d" style="width: 75%; height: 500px;"></div>
+
 <div>
-  <
+
   <h1>Contents: City Departments</h1>
   <a href = "https://www.cabq.gov/pets" target="_blank">Animal Welfare</a>
   <a href = "http://web.abq.org/Government/City-of-Albuquerque,-Aviation-Department-207" target="_blank">Aviation Department</a>
@@ -61,7 +62,11 @@
   <a href = "https://www.cabq.gov/transit" target="_blank">Transit Department</a>
   <a href = "https://www.cabq.gov/technology-innovation" target="_blank">Technology & Innovation Department</a>
 
-        </div>
+  <h1>Contents: City Departments</h1>
+  {{#each depts}}
+    <a href="/dept/{{deptID}}">{{name}}</a>
+  {{/each}}
+</div>
 
 <hr>
       <!-- </div> -->

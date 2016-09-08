@@ -54,3 +54,7 @@ p {
     font-style: italic;
     text-align: center;
 }
+
+#piechart_3d {
+  margin: 0px auto;
+}

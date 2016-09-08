@@ -23,7 +23,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 // Connect to database
-const db = new sequelize('citydata', 'root', 'Bullshit1');
+const db = new sequelize('citydata', 'root', 'password');
 
 // Define models
 // TODO: Add define here
@@ -87,11 +87,15 @@ db.sync().then(function() {
 });
 
 app.get('/', function (req, res) {
-  res.render('home');
+
+  // Grab all the departments
+  models.Department.findAll().then(function(depts) {
+    res.render('home', {depts: depts});
+  })
 });
 
-app.get('/dept', function(req, res) {
-  res.render('dept');
+app.get('/dept/:deptID', function(req, res) {
+  res.render('dept', {deptID: req.params.deptID});
 });
 
 app.get('/deptdata', function (req, res) {
@@ -116,12 +120,44 @@ app.get('/deptdata', function (req, res) {
     });
   });
 });
-  app.get('/about', function (req, res) {
-    res.render('about');
+
+// Grabs division data for an individual department.
+app.get('/deptdata/:deptid', function(req,res) {
+
+  // Use the deptid to grab all the divisions that belong to the department
+  models.Division.findAll({
+    where: {'deptID': req.params.deptid}
+  }).then(function(divisions) {
+
+    // Great, now grab every single budget item that we have in the database
+    models.BudgetItem.findAll().then(function(items) {
+
+      // For each division that we have, iterate through the budget items, see
+      // if the ID matches.  If it does, add it to the division total
+      for(var i = 0; i < divisions.length; i ++) {
+
+        divisions.total = 0;
+        for(var j = 0; j < items.length; j ++) {
+
+          if (divisions[i].divisionID == items[j].divisionID) {
+            divisions[i].total += items[j].total;
+          }
+        }
+      }
+
+      // Once the totals have been calculated, send results back as JSON
+      res.json(divisions);
+    });
   });
-  app.get('/contact', function (req, res) {
-    res.render('contact');
-  });
+});
+
+app.get('/about', function (req, res) {
+  res.render('about');
+});
+
+app.get('/contact', function (req, res) {
+  res.render('contact');
+});
 
 ////
 //start the server
