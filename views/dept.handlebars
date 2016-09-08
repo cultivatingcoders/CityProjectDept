@@ -1,6 +1,7 @@
 
   </head>
   <body>
+    <span id="deptID" hidden>{{deptID}}</span>
     <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -10,10 +11,11 @@
 
        function drawChart() {
          // Grab department data
-         $.get("/deptdata", function(data) {
+         var id = $("#deptID").html();
+         $.get("/deptdata/" + id, function(data) {
            // Google uses a pretty weird way of dealing with data. So, let's
            // modify it a little bit
-           var arrayData = [['Department', 'Total']];
+           var arrayData = [['Division', 'Total']];
            for(var i = 0; i < data.length; i ++) {
              arrayData.push([data[i].name, data[i].total]);
            }
@@ -22,7 +24,7 @@
            var chartData = google.visualization.arrayToDataTable(arrayData);
 
            var options = {
-             title: 'City Budget By Department',
+             title: 'Department Budget By Division',
              is3D: true,
            };
 

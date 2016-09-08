@@ -22,6 +22,7 @@ module.exports.define = function(db) {
       allowNull: false
     },
     name: sequelize.STRING,
+    total: sequelize.INTEGER,
     deptID: {
       type: sequelize.STRING,
       references: {
